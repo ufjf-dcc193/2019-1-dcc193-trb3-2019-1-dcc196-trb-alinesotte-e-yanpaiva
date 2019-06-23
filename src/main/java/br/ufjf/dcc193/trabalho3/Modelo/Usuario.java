@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -34,5 +35,7 @@ public class Usuario {
     @NotBlank (message = "E-mail é campo obrigatório")
     private String email;
 
+    @OneToOne
+    private Anotacao idAnotacao;
 
 }

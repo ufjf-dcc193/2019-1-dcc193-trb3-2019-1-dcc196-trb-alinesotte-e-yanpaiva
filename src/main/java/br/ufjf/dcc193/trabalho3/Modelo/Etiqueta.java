@@ -1,9 +1,11 @@
 package br.ufjf.dcc193.trabalho3.Modelo;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
 
@@ -28,4 +30,10 @@ public class Etiqueta {
 
     @NotBlank(message = "Qual é a url?")
     private String url;
+
+    @ManyToOne (cascade = CascadeType.ALL)
+    private Item idItem;
+
+    @ManyToOne (cascade = CascadeType.ALL)
+    private Vinculo idVinculo;
 }
