@@ -9,7 +9,7 @@ import br.ufjf.dcc193.trabalho3.Modelo.Usuario;
  * ItemRepositorio<
  */
 
- @Repositorys
+ @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario,Long> {
 
     
