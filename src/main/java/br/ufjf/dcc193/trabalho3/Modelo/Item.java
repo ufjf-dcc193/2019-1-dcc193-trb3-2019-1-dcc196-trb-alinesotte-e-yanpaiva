@@ -44,4 +44,12 @@ public class Item {
     @OneToOne(mappedBy = "idItemDestino")
     private Vinculo idVinculoDestino;
 
+    public Item(@NotBlank(message = "Qual é o título?") String titulo) {
+        this.titulo = titulo;
+    }
+
+    public Item() {
+    }
+
+ 
 }

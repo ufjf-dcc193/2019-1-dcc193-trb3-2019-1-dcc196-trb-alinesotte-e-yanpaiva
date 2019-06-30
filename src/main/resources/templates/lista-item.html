@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Lista de Item</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet" />
+</head>
+
+<body>
+    <div>
+        <form th:action="@{/item/nova.html}">
+            <input type="submit" value="Novo Item" />
+        </form>
+    </div>
+
+    <div class="panel panel-default" style="margin: 10px">
+        <div class="panel-heading">
+            <h1 class="panel-title">Lista de Itens</h1>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Título</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item: ${itens}" th:object=${item}>
+                        <td th:text=*{id}></td>
+                        <td th:text=*{titulo}></td>
+                        <td><a th:href="@{/item/editar.html(id=${item.id})}">
+                            <button>Editar</button></a></td>
+                        <td><a th:href="@{/item/excluir.html(id=${item.id})}">
+                            <button>Excluir</button></a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+            <form th:action="@{/item/index.html}">
+                <input type="submit" value="Home Item" />
+            </form>
+        </div>
+        </div>
+    </div>
+</body>
+
+</html>
