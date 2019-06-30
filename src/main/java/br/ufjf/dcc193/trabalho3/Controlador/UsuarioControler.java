@@ -64,7 +64,7 @@ public class UsuarioControler {
         ModelAndView mv = new ModelAndView();
         String codigoAcesso = String.valueOf(Long.toHexString(new Random().nextLong()));
         mv.setViewName("usuario-adicionar.html");
-        mv.addObject("usuario", new Usuario("nomeCompleto","codigoAcesso","descricaoTextual", "email"));
+        mv.addObject("usuario", new Usuario("nomeCompleto",codigoAcesso,"descricaoTextual", "email"));
         return mv;
     }
 
