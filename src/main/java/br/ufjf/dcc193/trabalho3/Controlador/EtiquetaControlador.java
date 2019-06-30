@@ -45,6 +45,7 @@ public class EtiquetaControlador {
             mv.addObject("etiqueta", etiqueta);
             return mv;
         }
+        
         repositorio.save(etiqueta);
         mv.setViewName("redirect:listar.html");
         return mv;
@@ -54,7 +55,7 @@ public class EtiquetaControlador {
     public ModelAndView criar() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("etiqueta-adicionar.html");
-        mv.addObject("atividade", new Etiqueta("titulo","descricaoTextual","url"));
+        mv.addObject("etiqueta", new Etiqueta("titulo","descricaoTextual","url"));
         return mv;
     }
 

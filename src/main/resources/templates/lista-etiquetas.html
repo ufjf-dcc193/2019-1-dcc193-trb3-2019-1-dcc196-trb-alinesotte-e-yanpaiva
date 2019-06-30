@@ -11,8 +11,8 @@
 
 <body>
     <div>
-        <form th:action="@{/etiqueta/nova.html}" >
-        <button type="submit" value="Cadastre nova Etiqueta"/>
+        <form th:action="@{/etiqueta/nova.html}">
+            <input type="submit" value="Nova Etiqueta" />
         </form>
     </div>
 
@@ -36,9 +36,16 @@
                         <td th:text=*{titulo}></td>
                         <td th:text=*{descricaoTextual}></td>
                         <td th:text=*{url}></td>
+                        <td><form th:action="@{/etiqueta/nova.html}">
+                            <input type="submit" value="Deletar" />
+                            <input type="submit" value="Atualizar" />
+                        </form> </td>
                     </tr>
                 </tbody>
             </table>
+            <form th:action="@{/etiqueta/nova.html}">
+                <input type="submit" value="Home" />
+            </form>
         </div>
     </div>
 </body>
