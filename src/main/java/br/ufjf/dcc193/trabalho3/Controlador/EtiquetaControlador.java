@@ -90,7 +90,7 @@ public class EtiquetaControlador {
     }
 
     @GetMapping(value = { "/excluir.html" })
-    public ModelAndView excluirUsuario(@RequestParam Long id) {
+    public ModelAndView excluir(@RequestParam Long id) {
         ModelAndView mv = new ModelAndView();
         repositorio.deleteById(id);
         mv.setViewName("redirect:/etiqueta/listar.html");
