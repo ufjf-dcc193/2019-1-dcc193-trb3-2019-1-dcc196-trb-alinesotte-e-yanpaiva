@@ -36,4 +36,17 @@ public class Etiqueta {
 
     @ManyToOne (cascade = CascadeType.ALL)
     private Vinculo idVinculo;
+
+    public Etiqueta(@NotBlank(message = "O título é obrigatório.") String titulo,
+            @NotBlank(message = "Faça a descrição da Etiqueta.") String descricaoTextual,
+            @NotBlank(message = "Qual é a url?") String url) {
+        this.titulo = titulo;
+        this.descricaoTextual = descricaoTextual;
+        this.url = url;
+    }
+
+   public Etiqueta(){}
+    
+    
+
 }
