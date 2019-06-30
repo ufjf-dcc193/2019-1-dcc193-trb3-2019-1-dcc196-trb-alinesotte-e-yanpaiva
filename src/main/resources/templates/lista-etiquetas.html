@@ -36,16 +36,18 @@
                         <td th:text=*{titulo}></td>
                         <td th:text=*{descricaoTextual}></td>
                         <td th:text=*{url}></td>
-                        <td><form th:action="@{/etiqueta/nova.html}">
-                            <input type="submit" value="Deletar" />
-                            <input type="submit" value="Atualizar" />
-                        </form> </td>
+                        <td><a th:href="@{/etiqueta/editar.html(id=${etiqueta.id})}">
+                            <button>Editar</button></a></td>
+                        <td><a th:href="@{/etiqueta/excluir.html(id=${etiqueta.id})}">
+                            <button>Excluir</button></a></td>
                     </tr>
                 </tbody>
             </table>
-            <form th:action="@{/etiqueta/nova.html}">
+            <div>
+            <form th:action="@{/etiqueta/index.html}">
                 <input type="submit" value="Home" />
             </form>
+        </div>
         </div>
     </div>
 </body>

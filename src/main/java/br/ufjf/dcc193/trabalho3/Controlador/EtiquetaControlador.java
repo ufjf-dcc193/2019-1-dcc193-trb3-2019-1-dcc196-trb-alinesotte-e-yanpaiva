@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.ufjf.dcc193.trabalho3.Modelo.Etiqueta;
@@ -26,6 +27,13 @@ public class EtiquetaControlador {
 
     @Autowired
     private EtiquetaRepositorio repositorio;
+
+    @RequestMapping({ "", "/", "/index.html" })
+    public ModelAndView atividadeIndex() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("etiqueta-index.html");
+        return mv;
+    }
 
     @GetMapping("/listar.html")
     public ModelAndView listar() {
@@ -45,7 +53,7 @@ public class EtiquetaControlador {
             mv.addObject("etiqueta", etiqueta);
             return mv;
         }
-        
+
         repositorio.save(etiqueta);
         mv.setViewName("redirect:listar.html");
         return mv;
@@ -55,18 +63,38 @@ public class EtiquetaControlador {
     public ModelAndView criar() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("etiqueta-adicionar.html");
-        mv.addObject("etiqueta", new Etiqueta("titulo","descricaoTextual","url"));
+        mv.addObject("etiqueta", new Etiqueta("titulo", "descricaoTextual", "url"));
         return mv;
     }
 
-    @GetMapping("/editar/{id}")
-    public ModelAndView editar(@PathVariable Long id) {
+    @GetMapping(value = { "/editar{id}" })
+    public ModelAndView editar(@RequestParam Long id) {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("etiqueta-form-edit.html");
         Etiqueta etiqueta = repositorio.findById(id).get();
         mv.addObject("etiqueta", etiqueta);
+        mv.setViewName("etiqueta-form-edit.html");
         return mv;
     }
 
+    @PostMapping("/editar{id}")
+    public ModelAndView editar(@PathVariable Long id, @Valid Etiqueta etiqueta, BindingResult binding) {
+        ModelAndView mv = new ModelAndView();
+        if (binding.hasErrors()) {
+            mv.setViewName("etiqueta-form-edit.html");
+            mv.addObject("etiqueta", etiqueta);
+            return mv;
+        }
+        repositorio.save(etiqueta);
+        mv.setViewName("redirect:listar.html");
+        return mv;
+    }
+
+    @GetMapping(value = { "/excluir.html" })
+    public ModelAndView excluirUsuario(@RequestParam Long id) {
+        ModelAndView mv = new ModelAndView();
+        repositorio.deleteById(id);
+        mv.setViewName("redirect:/etiqueta/listar.html");
+        return mv;
+    }
 
 }
