@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Lista de Etiquetas</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet" />
+</head>
+
+<body>
+    <div>
+        <form th:action="@{/etiqueta/nova.html}" >
+        <button type="submit" value="Cadastre nova Etiqueta"/>
+        </form>
+    </div>
+
+    <div class="panel panel-default" style="margin: 10px">
+        <div class="panel-heading">
+            <h1 class="panel-title">Lista de Etiquetas</h1>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Título</th>
+                        <th>Descrição Textual</th>
+                        <th>URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="etiqueta: ${etiquetas}" th:object=${etiqueta}>
+                        <td th:text=*{id}></td>
+                        <td th:text=*{titulo}></td>
+                        <td th:text=*{descricaoTextual}></td>
+                        <td th:text=*{url}></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
