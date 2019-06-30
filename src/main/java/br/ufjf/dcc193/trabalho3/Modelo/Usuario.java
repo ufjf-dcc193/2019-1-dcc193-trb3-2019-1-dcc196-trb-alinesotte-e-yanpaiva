@@ -38,4 +38,14 @@ public class Usuario {
     @OneToOne
     private Anotacao idAnotacao;
 
+    public Usuario(@NotBlank(message = "Nome é campo obrigatório") String nomeCompleto, @NotBlank String codigoAcesso,
+            @NotBlank(message = "Faça a descrição textual") String descricaoTextual,
+            @Email @NotBlank(message = "E-mail é campo obrigatório") String email) {
+        this.nomeCompleto = nomeCompleto;
+        this.codigoAcesso = codigoAcesso;
+        this.descricaoTextual = descricaoTextual;
+        this.email = email;
+    }
+
+    public Usuario(){}
 }
