@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,36 +38,49 @@ public class VinculoControlador {
     public ModelAndView atividadeIndex(@RequestParam Long idItem) {
         ModelAndView mv = new ModelAndView();
         Item i = itemRepositorio.getOne(idItem);
-        List<Vinculo> todosVinculosDoItem = vinculoRepositorio.findByIdItemOrigem(i);
-        todosVinculosDoItem.addAll(vinculoRepositorio.findByIdItemDestino(i));
-        if(todosVinculosDoItem.size()==0){
-            mv.addObject("naoPossuiVinculo", true);
-        }else{
+        List<Vinculo> todosVinculosDoItem = vinculoRepositorio.findVinculoByidItemOrigem(i);
+        System.out.println("---------"+todosVinculosDoItem.size());
+        if(todosVinculosDoItem.size() > 0){
             mv.addObject("vinculos", todosVinculosDoItem);
-            mv.addObject("naoPossuiVinculo", true);       
+            mv.addObject("naoPossuiVinculo", false);       
+        }else{
+            mv.addObject("naoPossuiVinculo", true);
         }
         mv.setViewName("vinculo-index.html");
         return mv;
     }
 
-    @PostMapping("/nova.html")
-    public ModelAndView criar(@Valid Item item, BindingResult binding) {
+    @RequestMapping({"/salvar.html" })
+    public ModelAndView criar(@RequestParam Long idItem ,Long idItemDestino) {
         ModelAndView mv = new ModelAndView();
-        if (binding.hasErrors()) {
-            mv.setViewName("item-adicionar.html");
-            mv.addObject("Item", item);
-            return mv;
-        }
-
-        mv.setViewName("redirect:listar.html");
+        saveVinculo(idItem, idItemDestino);
+        saveVinculo(idItemDestino, idItem);
+        mv.addObject("idItem", idItem);
+        List<Vinculo> todosVinculosDoItem = vinculoRepositorio.findVinculoByidItemOrigem(itemRepositorio.getOne(idItem));
+        mv.addObject("vinculos", todosVinculosDoItem);
+       
+        mv.setViewName("vinculo-index.html");
         return mv;
     }
 
-    @GetMapping("/nova.html")
-    public ModelAndView criar() {
+    private void saveVinculo(Long idItem, Long idItemDestino) {
+        Vinculo vinculo = new Vinculo();
+        Item origem = itemRepositorio.getOne(idItem);
+        Item destino = itemRepositorio.getOne(idItemDestino);
+        vinculo.setNomeItemOrigem(origem.getTitulo());
+        vinculo.setNomeItemDestino(destino.getTitulo());
+        vinculo.setIdItemDestino(origem);
+        vinculo.setIdItemOrigem(destino);
+        vinculoRepositorio.save(vinculo);
+    }
+
+    @GetMapping("/criar.html")
+    public ModelAndView criar(@RequestParam Long idItem) {
         ModelAndView mv = new ModelAndView();
-        Vinculo v = new Vinculo();
-        mv.addObject("vinculo", v);
+        Item itemOrigem = itemRepositorio.getOne(idItem);
+        List<Item> itens = itemRepositorio.buscaItemDiferenteDe(idItem);
+        mv.addObject("itens", itens);
+        mv.addObject("itemOrigem", itemOrigem);
         mv.setViewName("vinculo-adicionar.html");
         return mv;
     }

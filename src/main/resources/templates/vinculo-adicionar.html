@@ -9,41 +9,31 @@
 <body>
     <h1>Vínculo entre Itens</h1>
 
-    <div>
-
-        <form>
-            <label>Item Origem: <select name="origem">
-                    <option th:each="item: ${itens}" th:object="${item}" th:value="*{key}" th:text="*{key+': '+value}"
-                        th:selected="${min==opcao.key}"></option>
-                </select></label>
-
-            <label>Item Destino: <select name="destino">
-                    <option th:each="item: ${itens}" th:object="${item}" th:value="*{key}" th:text="*{key+': '+value}"
-                        th:selected="${max==opcao.key}"></option>
-                </select></label>
-            <input type="submit" value="Criar Vínculo" />
-        </form>
-        <h1>Lista de Vínculo entre Itens</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Item Origem</th>
-                    <th>Item Destino</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="vinculo: ${vinculos}" th:object="${vinculo}">
-                    <td th:text="*{id}"></td>
-                    <td th:text="*{}"></td>
-                    <td th:text="*{}"></td>
-                    <td><a th:href="@{/vinculo/editar.html(id=${vinculo.id})}">
-                            <button>Editar</button></a></td>
-                    <td><a th:href="@{/vinculo/excluir.html(id=${vinculo.id})}">
-                            <button>Excluir</button></a></td>
-                </tr>
-            </tbody>
-        </table>
+    <div>        
+        <label>Item Origem: <input type="text" th:object="${itemOrigem}" th:field="*{titulo}" readonly></label>
+        <a th:href="@{/vinculo/index.html(idItem=${param.idItem})}">
+            <button>Cancelar</button></a>
+        <div class="panel-body">
+           <table class="table">
+               <thead>
+                   <tr>
+                       <th>Id</th>
+                       <th>Título</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   <tr th:each="item: ${itens}" th:object=${item}>
+                       <td th:text=*{id}></td>
+                       <td th:text=*{titulo}></td>
+                       <td><a th:href="@{/vinculo/salvar.html(idItem=${param.idItem},idItemDestino=${item.id})}">
+                           <button>Vincular</button></a></td>
+                   </tr>
+               </tbody>
+           </table>
+        </div>
+    </div>
+    
+           
 
 </body>
 

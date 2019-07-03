@@ -25,9 +25,9 @@ import lombok.Data;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank
+    
     private String nomeItemOrigem;
-    @NotBlank
+    
     private String nomeItemDestino;
     @OneToOne
     private Item idItemOrigem;

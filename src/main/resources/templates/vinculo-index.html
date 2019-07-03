@@ -10,12 +10,10 @@
     <h1>Vínculo entre Itens</h1>
 
     <div>
-        <div th:if="${naoPossuiVinculo}">
+        <div th:if=${naoPossuiVinculo}>
                     <h2>O item não possui vinculos</h2>
-                    <a th:href="@{/vinculo/criar.html(idItem=${param.idItem})}">
-                    <button>Criar novo vinculo</button></a>
         </div>
-        <div th:unless="${naoPossuiVinculo}">
+        <div th:unless=${naoPossuiVinculo}>
             <h1>Lista de Vínculo entre Itens</h1>
             <table>
                 <thead>
@@ -37,6 +35,9 @@
                     </tr>
                 </tbody>
             </table>
+        
+            <a th:href="@{/vinculo/criar.html(idItem=${param.idItem})}">
+                <button>Criar novo vinculo</button></a>
         </div>
     </div>
 </body>
