@@ -30,13 +30,15 @@ public class VinculoControlador {
 
     @Autowired
     private VinculoRepositorio vinculoRepositorio;
-    private ItemRepositorio ItemRepositorio;
+    @Autowired
+    private ItemRepositorio itemRepositorio;
 
     @RequestMapping({ "", "/", "/index.html" })
     public ModelAndView atividadeIndex(@RequestParam Long idItem) {
         ModelAndView mv = new ModelAndView();
-        List<Vinculo> todosVinculosDoItem = vinculoRepositorio.findAllByIdItemOrigem(idItem);
-        todosVinculosDoItem.addAll(vinculoRepositorio.findAllByIdidItemDestino(idItem));
+        Item i = itemRepositorio.getOne(idItem);
+        List<Vinculo> todosVinculosDoItem = vinculoRepositorio.findByIdItemOrigem(i);
+        todosVinculosDoItem.addAll(vinculoRepositorio.findByIdItemDestino(i));
         if(todosVinculosDoItem.size()==0){
             mv.addObject("naoPossuiVinculo", true);
         }else{
