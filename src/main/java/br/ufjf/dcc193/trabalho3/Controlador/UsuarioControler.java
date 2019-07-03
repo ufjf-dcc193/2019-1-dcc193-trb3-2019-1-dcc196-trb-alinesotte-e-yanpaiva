@@ -55,7 +55,7 @@ public class UsuarioControler {
         }
 
         repositorio.save(usuario);
-        mv.setViewName("redirect:listar.html");
+        mv.setViewName("redirect:/login.html");
         return mv;
     }
 

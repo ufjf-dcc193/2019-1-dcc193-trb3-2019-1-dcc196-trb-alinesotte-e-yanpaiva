@@ -48,4 +48,12 @@ public class Usuario {
     }
 
     public Usuario(){}
+
+    public Usuario(@NotBlank String codigoAcesso,
+            @Email @NotBlank(message = "E-mail é campo obrigatório") String email) {
+        this.codigoAcesso = codigoAcesso;
+        this.email = email;
+    }
+
+    
 }
