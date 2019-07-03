@@ -30,15 +30,17 @@
                         <td th:text="*{nomeItemDestino}"></td>
                         <td><a th:href="@{/vinculo/editar.html(id=${vinculo.id})}">
                                 <button>Editar</button></a></td>
-                        <td><a th:href="@{/vinculo/excluir.html(id=${vinculo.id})}">
-                                <button>Excluir</button></a></td>
+                        <form th:action="@{/vinculo/excluir.html(id=${vinculo.id})}" th:object="${vinculo}" method="POST">    
+                            <td><button>Excluir</button></a></td>
+                        </form>        
+                        
                     </tr>
                 </tbody>
             </table>
-        
-            <a th:href="@{/vinculo/criar.html(idItem=${param.idItem})}">
-                <button>Criar novo vinculo</button></a>
         </div>
+        <a th:href="@{/vinculo/criar.html(idItem=${param.idItem})}">
+            <button>Criar novo vinculo</button></a>
+   
     </div>
 </body>
 </html>

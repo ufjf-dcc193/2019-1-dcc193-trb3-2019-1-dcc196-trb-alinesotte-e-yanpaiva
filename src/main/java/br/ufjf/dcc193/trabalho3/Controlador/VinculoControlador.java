@@ -39,7 +39,6 @@ public class VinculoControlador {
         ModelAndView mv = new ModelAndView();
         Item i = itemRepositorio.getOne(idItem);
         List<Vinculo> todosVinculosDoItem = vinculoRepositorio.findVinculoByidItemOrigem(i);
-        System.out.println("---------"+todosVinculosDoItem.size());
         if(todosVinculosDoItem.size() > 0){
             mv.addObject("vinculos", todosVinculosDoItem);
             mv.addObject("naoPossuiVinculo", false);       
@@ -103,15 +102,19 @@ public class VinculoControlador {
             return mv;
         }
         vinculoRepositorio.save(vinculo);
-        mv.setViewName("redirect:listar.html");
+        mv.setViewName("vinculo-index.html");
         return mv;
     }
 
-    @GetMapping(value = { "/excluir.html" })
-    public ModelAndView excluir(@RequestParam Long id) {
+    @PostMapping(value = { "/excluir.html" })
+    public ModelAndView excluir(@RequestParam Long id, Vinculo vinculo) {
         ModelAndView mv = new ModelAndView();
-        vinculoRepositorio.deleteById(id);
-        mv.setViewName("redirect:/listar.html");
+        Item origem = vinculo.getIdItemOrigem();
+        Item destino = vinculo.getIdItemDestino();
+        vinculoRepositorio.deleteVinculoPorIdItemOrigemEIdItemDestino(origem, destino);
+        //vinculoRepositorio.deleteById(id);
+        
+        mv.setViewName("vinculo-index.html");
         return mv;
     }
 }

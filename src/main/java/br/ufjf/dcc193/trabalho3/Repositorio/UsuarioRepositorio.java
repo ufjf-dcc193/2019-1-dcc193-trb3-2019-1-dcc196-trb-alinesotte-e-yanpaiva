@@ -14,7 +14,7 @@ import org.springframework.data.repository.query.Param;
  @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario,Long> {
 
-    @Query("SELECT u.id FROM Usuario u WHERE u.email =:email and u.codigoAcesso =:codigoAcesso")
-    Long getIdByEmailAndSenha(@Param("email") String email,
+    @Query("SELECT u FROM Usuario u WHERE u.email =:email and u.codigoAcesso =:codigoAcesso")
+    Usuario getUsuarioByEmailAndSenha(@Param("email") String email,
      @Param("codigoAcesso") String codigoAcesso);
 }

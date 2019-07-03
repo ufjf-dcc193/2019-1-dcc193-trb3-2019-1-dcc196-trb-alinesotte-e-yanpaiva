@@ -15,7 +15,8 @@ import br.ufjf.dcc193.trabalho3.Modelo.*;
  */
 @Repository
 public interface VinculoRepositorio extends JpaRepository<Vinculo,Long> {
-    List<Vinculo> findByIdItemDestino(Item item);
     List<Vinculo> findVinculoByidItemOrigem(Item item);
+    @Query("delete FROM Vinculo v WHERE ((idItemOrigem =:origem) AND (idItemDestino =:destino)) OR ((idItemOrigem =:destino) AND (idItemDestino =:origem)) ")
+    void deleteVinculoPorIdItemOrigemEIdItemDestino(@Param("origem") Item origem, @Param("destino")Item destino);
     
 }
