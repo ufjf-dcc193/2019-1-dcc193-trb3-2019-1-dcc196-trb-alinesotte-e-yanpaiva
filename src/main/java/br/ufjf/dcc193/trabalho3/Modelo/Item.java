@@ -35,9 +35,6 @@ public class Item {
     @OneToMany(mappedBy ="idItem",cascade = CascadeType.ALL)
     private List<Etiqueta> idEtiquetas;
 
-    @ManyToMany(mappedBy ="idItem",cascade = CascadeType.ALL)
-    private List<Vinculo> idVinculos;
-
     @OneToOne(mappedBy = "idItemOrigem")
     private Vinculo idVinculoOrigem;
 
@@ -49,6 +46,54 @@ public class Item {
     }
 
     public Item() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public List<Anotacao> getIdAnotacaos() {
+        return idAnotacaos;
+    }
+
+    public void setIdAnotacaos(List<Anotacao> idAnotacaos) {
+        this.idAnotacaos = idAnotacaos;
+    }
+
+    public List<Etiqueta> getIdEtiquetas() {
+        return idEtiquetas;
+    }
+
+    public void setIdEtiquetas(List<Etiqueta> idEtiquetas) {
+        this.idEtiquetas = idEtiquetas;
+    }
+
+    public Vinculo getIdVinculoOrigem() {
+        return idVinculoOrigem;
+    }
+
+    public void setIdVinculoOrigem(Vinculo idVinculoOrigem) {
+        this.idVinculoOrigem = idVinculoOrigem;
+    }
+
+    public Vinculo getIdVinculoDestino() {
+        return idVinculoDestino;
+    }
+
+    public void setIdVinculoDestino(Vinculo idVinculoDestino) {
+        this.idVinculoDestino = idVinculoDestino;
     }
 
  

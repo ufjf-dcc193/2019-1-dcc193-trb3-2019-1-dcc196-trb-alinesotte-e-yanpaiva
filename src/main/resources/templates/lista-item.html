@@ -26,6 +26,7 @@
                     <tr>
                         <th>Id</th>
                         <th>Título</th>
+                        <th>Vinculos</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,10 +37,17 @@
                             <button>Editar</button></a></td>
                         <td><a th:href="@{/item/excluir.html(id=${item.id})}">
                             <button>Excluir</button></a></td>
+                        <td><a th:href="@{/vinculo/index.html(idItem=${item.id})}">
+                            <button>Exibir Vinculos</button></a></td>
+                            
                     </tr>
                 </tbody>
             </table>
             <div>
+            
+            <form th:action="@{/vinculo/index.html}">
+                    <input type="submit" value="Home Item" />
+            </form>    
             <form th:action="@{/item/index.html}">
                 <input type="submit" value="Home Item" />
             </form>

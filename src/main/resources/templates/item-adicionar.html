@@ -15,10 +15,9 @@
     <html>Item:Nova
 
     </html>
-    <form th:action="@{/item/nova.html}" th:object="${item}" method="POST">
+    <form th:action="@{/item/nova.html}"  method="POST" th:object="${item}">
         <label>Título: <input type="text" th:field="*{titulo}" /></label>
-        <strong th:if="${#fields.hasErrors('titulo')}"
-        th:errors="*{titulo}"></strong>
+        <strong th:if="${#fields.hasErrors('titulo')}"th:errors="*{titulo}"></strong>
         
 
         <input type="submit"/>
