@@ -10,37 +10,34 @@
     <h1>Vínculo entre Itens</h1>
 
     <div>
-        <c:choose>
-            <c:when test="${naoPossuiVinculo}">
+        <div th:if="${naoPossuiVinculo}">
                     <h2>O item não possui vinculos</h2>
-                    <a th:href="@{/vinculo/criar.html(id=${vinculo.id})}">
-                    <button>Editar</button></a>
-            </c:when>
-            <c:otherwise>
-                <h1>Lista de Vínculo entre Itens</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Item Origem</th>
-                            <th>Item Destino</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="vinculo: ${vinculos}" th:object="${vinculo}">
-                            <td th:text="*{id}"></td>
-                            <td th:text="*{nomeItemOrigem}"></td>
-                            <td th:text="*{nomeItemDestino}"></td>
-                            <td><a th:href="@{/vinculo/editar.html(id=${vinculo.id})}">
-                                    <button>Editar</button></a></td>
-                            <td><a th:href="@{/vinculo/excluir.html(id=${vinculo.id})}">
-                                    <button>Excluir</button></a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </c:otherwise>
-        </c:choose>
+                    <a th:href="@{/vinculo/criar.html(idItem=${param.idItem})}">
+                    <button>Criar novo vinculo</button></a>
+        </div>
+        <div th:unless="${naoPossuiVinculo}">
+            <h1>Lista de Vínculo entre Itens</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Item Origem</th>
+                        <th>Item Destino</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="vinculo: ${vinculos}" th:object="${vinculo}">
+                        <td th:text="*{id}"></td>
+                        <td th:text="*{nomeItemOrigem}"></td>
+                        <td th:text="*{nomeItemDestino}"></td>
+                        <td><a th:href="@{/vinculo/editar.html(id=${vinculo.id})}">
+                                <button>Editar</button></a></td>
+                        <td><a th:href="@{/vinculo/excluir.html(id=${vinculo.id})}">
+                                <button>Excluir</button></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
-
 </html>

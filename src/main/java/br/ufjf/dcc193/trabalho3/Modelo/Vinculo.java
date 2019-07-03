@@ -45,6 +45,17 @@ import lombok.Data;
     }
 
    
+    public Vinculo(Long id, @NotBlank String nomeItemOrigem, @NotBlank String nomeItemDestino, Item idItemOrigem,
+            Item idItemDestino, List<Etiqueta> idEtiquetas, List<Anotacao> idAnotacaos) {
+        this.id = id;
+        this.nomeItemOrigem = nomeItemOrigem;
+        this.nomeItemDestino = nomeItemDestino;
+        this.idItemOrigem = idItemOrigem;
+        this.idItemDestino = idItemDestino;
+        this.idEtiquetas = idEtiquetas;
+        this.idAnotacaos = idAnotacaos;
+    }
+
 
     public Long getId() {
         return id;
@@ -102,15 +113,6 @@ import lombok.Data;
         this.nomeItemDestino = nomeItemDestino;
     }
 
-    public Vinculo(@NotBlank String nomeItemOrigem, @NotBlank String nomeItemDestino, Item idItemOrigem,
-            Item idItemDestino, List<Etiqueta> idEtiquetas, List<Anotacao> idAnotacaos, List<Item> idItem) {
-        this.nomeItemOrigem = nomeItemOrigem;
-        this.nomeItemDestino = nomeItemDestino;
-        this.idItemOrigem = idItemOrigem;
-        this.idItemDestino = idItemDestino;
-        this.idEtiquetas = idEtiquetas;
-        this.idAnotacaos = idAnotacaos;
-    }
 
 
 
