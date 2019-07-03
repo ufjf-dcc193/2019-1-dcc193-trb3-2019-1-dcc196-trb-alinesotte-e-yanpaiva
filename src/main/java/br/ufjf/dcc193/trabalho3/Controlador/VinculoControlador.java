@@ -31,6 +31,7 @@ public class VinculoControlador {
 
     @Autowired
     private VinculoRepositorio vinculoRepositorio;
+    
     @Autowired
     private ItemRepositorio itemRepositorio;
 
@@ -39,6 +40,7 @@ public class VinculoControlador {
         ModelAndView mv = new ModelAndView();
         Item i = itemRepositorio.getOne(idItem);
         List<Vinculo> todosVinculosDoItem = vinculoRepositorio.findVinculoByidItemOrigem(i);
+        todosVinculosDoItem.addAll(vinculoRepositorio.findVinculoByidItemDestino(i));
         if(todosVinculosDoItem.size() > 0){
             mv.addObject("vinculos", todosVinculosDoItem);
             mv.addObject("naoPossuiVinculo", false);       
@@ -53,9 +55,10 @@ public class VinculoControlador {
     public ModelAndView criar(@RequestParam Long idItem ,Long idItemDestino) {
         ModelAndView mv = new ModelAndView();
         saveVinculo(idItem, idItemDestino);
-        saveVinculo(idItemDestino, idItem);
         mv.addObject("idItem", idItem);
-        List<Vinculo> todosVinculosDoItem = vinculoRepositorio.findVinculoByidItemOrigem(itemRepositorio.getOne(idItem));
+        Item i = itemRepositorio.getOne(idItem);
+        List<Vinculo> todosVinculosDoItem = vinculoRepositorio.findVinculoByidItemOrigem(i);
+        todosVinculosDoItem.addAll(vinculoRepositorio.findVinculoByidItemDestino(i));
         mv.addObject("vinculos", todosVinculosDoItem);
        
         mv.setViewName("vinculo-index.html");
@@ -109,11 +112,7 @@ public class VinculoControlador {
     @PostMapping(value = { "/excluir.html" })
     public ModelAndView excluir(@RequestParam Long id, Vinculo vinculo) {
         ModelAndView mv = new ModelAndView();
-        Item origem = vinculo.getIdItemOrigem();
-        Item destino = vinculo.getIdItemDestino();
-        vinculoRepositorio.deleteVinculoPorIdItemOrigemEIdItemDestino(origem, destino);
-        //vinculoRepositorio.deleteById(id);
-        
+        vinculoRepositorio.deleteById(id);
         mv.setViewName("vinculo-index.html");
         return mv;
     }
