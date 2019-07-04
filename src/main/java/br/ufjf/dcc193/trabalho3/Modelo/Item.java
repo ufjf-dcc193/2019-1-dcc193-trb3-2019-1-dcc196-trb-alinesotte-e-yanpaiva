@@ -34,10 +34,10 @@ public class Item {
     @OneToMany(mappedBy ="idItem",cascade = CascadeType.ALL)
     private List<Etiqueta> idEtiquetas;
 
-    @OneToOne(mappedBy = "idItemOrigem")
+    @OneToOne
     private Vinculo idVinculoOrigem;
 
-    @OneToOne(mappedBy = "idItemDestino")
+    @OneToOne
     private Vinculo idVinculoDestino;
 
     public Item(@NotBlank(message = "Qual é o título?") String titulo) {

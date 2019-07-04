@@ -2,6 +2,7 @@ package br.ufjf.dcc193.trabalho3.Modelo;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,9 +30,11 @@ import lombok.Data;
     private String nomeItemOrigem;
     
     private String nomeItemDestino;
+    
     @OneToOne
     private Item idItemOrigem;
 
+    
     @OneToOne
     private Item idItemDestino;
 

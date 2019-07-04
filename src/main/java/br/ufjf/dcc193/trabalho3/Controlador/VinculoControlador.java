@@ -31,6 +31,7 @@ public class VinculoControlador {
 
     @Autowired
     private VinculoRepositorio vinculoRepositorio;
+
     @Autowired
     private ItemRepositorio itemRepositorio;
 
@@ -39,6 +40,7 @@ public class VinculoControlador {
         ModelAndView mv = new ModelAndView();
         Item i = itemRepositorio.getOne(idItem);
         List<Vinculo> todosVinculosDoItem = vinculoRepositorio.findVinculoByidItemOrigem(i);
+        todosVinculosDoItem.addAll(vinculoRepositorio.findVinculoByidItemDestino(i));
         if(todosVinculosDoItem.size() > 0){
             mv.addObject("vinculos", todosVinculosDoItem);
             mv.addObject("naoPossuiVinculo", false);       
@@ -53,9 +55,10 @@ public class VinculoControlador {
     public ModelAndView criar(@RequestParam Long idItem ,Long idItemDestino) {
         ModelAndView mv = new ModelAndView();
         saveVinculo(idItem, idItemDestino);
-        saveVinculo(idItemDestino, idItem);
         mv.addObject("idItem", idItem);
-        List<Vinculo> todosVinculosDoItem = vinculoRepositorio.findVinculoByidItemOrigem(itemRepositorio.getOne(idItem));
+        Item i = itemRepositorio.getOne(idItem);
+        List<Vinculo> todosVinculosDoItem = vinculoRepositorio.findVinculoByidItemOrigem(i);
+        todosVinculosDoItem.addAll(vinculoRepositorio.findVinculoByidItemDestino(i));
         mv.addObject("vinculos", todosVinculosDoItem);
        
         mv.setViewName("vinculo-index.html");
@@ -85,35 +88,58 @@ public class VinculoControlador {
     }
 
     @GetMapping(value = { "/editar{id}" })
-    public ModelAndView editar(@RequestParam Long id) {
+    public ModelAndView editar(@RequestParam Long id, Long idItem) {
         ModelAndView mv = new ModelAndView();
-        Vinculo vinculo = vinculoRepositorio.findById(id).get();
+        Vinculo vinculo = vinculoRepositorio.getOne(id);
+        List<Item> itens = itemRepositorio.buscaItemDiferenteDe(idItem);
+        mv.addObject("itens", itens);
         mv.addObject("vinculo", vinculo);
-        mv.setViewName("vinculo-form-edit.html");
+        mv.addObject("idItem", idItem);
+        mv.setViewName("vinculo-editar.html");
         return mv;
     }
 
-    @PostMapping("/editar{id}")
-    public ModelAndView editar(@PathVariable Long id, @Valid Vinculo vinculo, BindingResult binding) {
+    @PostMapping("/editar{id}{idItem}{idDestino}")
+    public ModelAndView editar(@PathVariable Long id,@RequestParam Long idItem,@RequestParam Long idDestino, @Valid Vinculo vinculo, BindingResult binding) {
         ModelAndView mv = new ModelAndView();
+        mv.addObject("idItem", idItem);
+        mv.addObject("id", id);
         if (binding.hasErrors()) {
             mv.setViewName("vinculo-form-edit.html");
             mv.addObject("vinculo", vinculo);
+            mv.addObject("idItem", idItem);
+            mv.addObject("id", id);            
             return mv;
         }
-        vinculoRepositorio.save(vinculo);
+        Item i = itemRepositorio.getOne(idItem);
+        List<Vinculo> todosVinculosDoItem = vinculoRepositorio.findVinculoByidItemOrigem(i);
+        todosVinculosDoItem.addAll(vinculoRepositorio.findVinculoByidItemDestino(i));
+        if(todosVinculosDoItem.size() > 0){
+            mv.addObject("vinculos", todosVinculosDoItem);
+            mv.addObject("naoPossuiVinculo", false);       
+        }else{
+            mv.addObject("naoPossuiVinculo", true);
+        }
+        editVinculo(idItem, idDestino, vinculo);
+        List<Item> itens = itemRepositorio.buscaItemDiferenteDe(idItem);
+        mv.addObject("itens", itens);
         mv.setViewName("vinculo-index.html");
         return mv;
+    }
+    private void editVinculo(Long idItem, Long idItemDestino, Vinculo v) {
+        Item origem = itemRepositorio.getOne(idItem);
+        Item destino = itemRepositorio.getOne(idItemDestino);
+        v.setNomeItemOrigem(origem.getTitulo());
+        v.setNomeItemDestino(destino.getTitulo());
+        v.setIdItemDestino(origem);
+        v.setIdItemOrigem(destino);
+        vinculoRepositorio.save(v);
     }
 
     @PostMapping(value = { "/excluir.html" })
     public ModelAndView excluir(@RequestParam Long id, Vinculo vinculo) {
         ModelAndView mv = new ModelAndView();
-        Item origem = vinculo.getIdItemOrigem();
-        Item destino = vinculo.getIdItemDestino();
-        vinculoRepositorio.deleteVinculoPorIdItemOrigemEIdItemDestino(origem, destino);
-        //vinculoRepositorio.deleteById(id);
-        
+        vinculoRepositorio.deleteById(id);
         mv.setViewName("vinculo-index.html");
         return mv;
     }

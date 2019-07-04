@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import br.ufjf.dcc193.trabalho3.Modelo.Item;
+import br.ufjf.dcc193.trabalho3.Modelo.Vinculo;
 
 import java.util.List;
 
 
 import br.ufjf.dcc193.trabalho3.Repositorio.ItemRepositorio;
+import br.ufjf.dcc193.trabalho3.Repositorio.VinculoRepositorio;
 
 /**
  * ItemControlador
@@ -29,6 +31,9 @@ public class ItemControlador {
     @Autowired
     private ItemRepositorio repositorio;
 
+    @Autowired
+    private VinculoRepositorio vRepositorio;
+         
     @RequestMapping({ "", "/", "/index.html" })
     public ModelAndView atividadeIndex() {
         ModelAndView mv = new ModelAndView();
@@ -94,7 +99,11 @@ public class ItemControlador {
     @GetMapping(value = { "/excluir.html" })
     public ModelAndView excluir(@RequestParam Long id) {
         ModelAndView mv = new ModelAndView();
+        List<Vinculo> v = vRepositorio.findVinculoByidItemDestino(repositorio.getOne(id));
+        v.addAll(vRepositorio.findVinculoByidItemOrigem(repositorio.getOne(id)));
+        vRepositorio.deleteAll(v);
         repositorio.deleteById(id);
+        
         mv.setViewName("redirect:/item/listar.html");
         return mv;
     }

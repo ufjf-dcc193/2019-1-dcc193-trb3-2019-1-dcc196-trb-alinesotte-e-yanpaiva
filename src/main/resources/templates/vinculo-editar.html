@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title> Página Principal</title>
+</head>
+
+<body>
+    <h1>Vínculo entre Itens</h1>
+
+    <div>        
+        <label>Item Origem: <input type="text" th:object="${vinculo}" th:field="*{nomeItemOrigem}" readonly></label>
+        <label>Item Destino: <input type="text" th:object="${vinculo}" th:field="*{nomeItemDestino}" readonly></label>
+        
+        <a th:href="@{/vinculo/index.html(idItem=${param.idItem})}">
+            <button>Cancelar</button></a>
+        <div class="panel-body">
+           <table class="table">
+               <thead>
+                   <tr>
+                       <th>Id</th>
+                       <th>Título</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   <tr th:each="item: ${itens}" th:object=${item}>
+                       <td th:text=*{id}></td>
+                       <td th:text=*{titulo}></td>
+                       <form th:action="@{/vinculo/editar(id=${vinculo.id}, idItem=${param.idItem}, idDestino=${item.id})}" th:object="${vinculo}" method="POST"> 
+                            <td><button>Vincular</button></td>
+                       </form>
+                   </tr>
+               </tbody>
+           </table>
+        </div>
+    </div>
+    
+           
+
+</body>
+
+</html>
