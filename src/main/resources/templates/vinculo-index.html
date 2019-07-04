@@ -28,7 +28,7 @@
                         <td th:text="*{id}"></td>
                         <td th:text="*{nomeItemOrigem}"></td>
                         <td th:text="*{nomeItemDestino}"></td>
-                        <td><a th:href="@{/vinculo/editar.html(id=${vinculo.id})}">
+                        <td><a th:href="@{/vinculo/editar.html(id=${vinculo.id}, idItem=${param.idItem})}">
                                 <button>Editar</button></a></td>
                         <form th:action="@{/vinculo/excluir.html(id=${vinculo.id})}" th:object="${vinculo}" method="POST">    
                             <td><button>Excluir</button></a></td>
